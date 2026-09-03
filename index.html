@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambulance C.R.T - Cinangka Respon Team</title>
+    <meta name="description" content="Layanan transportasi medis, sewa ambulance darurat 24 jam dalam kota dan antar kota oleh Ambulance C.R.T (Cinangka Respon Team). Terintegrasi Google Maps dan WhatsApp.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Konfigurasi Add to Homescreen (PWA Basic) -->
+    <meta name="theme-color" content="#dc2626">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Ambulance CRT">
+    
+    <!-- Icon Aplikasi (Menggunakan SVG Emoji Ambulance agar otomatis muncul tanpa file gambar tambahan) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚑</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚑</text></svg>">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (via CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons (via CDN) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Custom Configuration untuk Font -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Menghilangkan scrollbar tapi tetap bisa scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-red-200 selection:text-red-900">
+
+    <div class="bg-red-600 text-white py-2.5 px-4 text-center text-sm font-semibold flex items-center justify-center gap-2">
+        <i data-lucide="alert-triangle" class="w-4 h-4 animate-pulse"></i>
+        <span>LAYANAN DARURAT 24 JAM: <a href="tel:+628993788154" class="underline decoration-red-400 hover:text-red-200 transition">0899-3788-154</a></span>
+    </div>
+
+    <nav class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="bg-red-50 p-2.5 rounded-xl text-red-600 group-hover:bg-red-100 transition-colors">
+                        <i data-lucide="heart-pulse" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-2xl text-slate-900 tracking-tight">Ambulance<span class="text-red-600">C.R.T</span></h1>
+                        <p class="text-[11px] uppercase tracking-wider text-slate-500 font-bold">Cinangka Respon Team</p>
+                    </div>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#layanan" class="text-slate-600 hover:text-red-600 font-semibold transition-colors">Layanan</a>
+                    <a href="#pemesanan" class="text-slate-600 hover:text-red-600 font-semibold transition-colors">Pesan & Maps</a>
+                    <a href="#tentang" class="text-slate-600 hover:text-red-600 font-semibold transition-colors">Tentang Kami</a>
+                    <a href="tel:+628993788154" class="bg-red-600 hover:bg-red-700 text-white px-7 py-3 rounded-full font-bold flex items-center gap-2 shadow-lg shadow-red-600/30 transition-all transform hover:-translate-y-0.5">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
+                        Hubungi
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="btn-mobile-menu" class="text-slate-600 hover:text-red-600 p-2 focus:outline-none focus:bg-slate-100 rounded-lg transition-colors" aria-label="Toggle menu">
+                        <i data-lucide="menu" id="icon-menu" class="w-7 h-7"></i>
+                        <i data-lucide="x" id="icon-close" class="w-7 h-7 hidden"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 absolute w-full shadow-xl">
+            <div class="px-4 pt-3 pb-6 space-y-1">
+                <a href="#layanan" class="mobile-link block px-4 py-3.5 text-slate-700 font-semibold rounded-lg hover:bg-slate-50">Layanan</a>
+                <a href="#pemesanan" class="mobile-link block px-4 py-3.5 text-slate-700 font-semibold rounded-lg hover:bg-slate-50">Pesan & Maps</a>
+                <a href="#tentang" class="mobile-link block px-4 py-3.5 text-slate-700 font-semibold rounded-lg hover:bg-slate-50">Tentang Kami</a>
+                <a href="tel:+628993788154" class="mt-4 bg-red-600 text-white px-6 py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-red-600/20 active:scale-95 transition-transform">
+                    <i data-lucide="phone" class="w-5 h-5"></i>
+                    Panggil Sekarang (24 Jam)
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative bg-white overflow-hidden isolate">
+        <!-- Background Decoration -->
+        <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-red-50 via-slate-50 to-white"></div>
+        <div class="absolute inset-y-0 right-0 -z-10 w-[200%] max-w-none origin-bottom-left skew-x-[-30deg] bg-white shadow-xl shadow-red-600/5 ring-1 ring-red-50 sm:w-[150%]"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24 md:pt-24 md:pb-32 flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
+            <!-- Text Content -->
+            <div class="lg:w-1/2 space-y-8">
+                <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-red-50 border border-red-100 text-red-700 font-semibold text-sm">
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-600"></span>
+                    </span>
+                    Armada Siaga Cepat Hadir
+                </div>
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-[1.15]">
+                    Evakuasi Medis <br/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500">Aman & Terpercaya</span>
+                </h2>
+                <p class="text-lg text-slate-600 max-w-xl leading-relaxed">
+                    Kami siap melayani transportasi medis darurat dan non-darurat Dalam Kota maupun Luar Kota. Didukung fasilitas standar VIP dan tenaga medis bersertifikat.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 pt-2">
+                    <a href="#pemesanan" class="bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-xl font-bold text-center transition-all shadow-lg hover:shadow-xl hover:-translate-y-1">
+                        Pesan Ambulance
+                    </a>
+                    <a href="tel:+628993788154" class="bg-white border-2 border-slate-200 hover:border-red-600 hover:text-red-600 text-slate-700 px-8 py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group">
+                        <i data-lucide="phone-call" class="w-5 h-5 group-hover:animate-bounce"></i>
+                        Konsultasi Gratis
+                    </a>
+                </div>
+            </div>
+
+            <!-- Image/Illustration Content -->
+            <div class="lg:w-1/2 relative w-full">
+                <div class="absolute inset-0 bg-gradient-to-tr from-red-200 to-transparent rounded-full blur-3xl opacity-40"></div>
+                
+                <!-- FOTO UNIT AMBULANCE SEMENTARA -->
+                <!-- Nanti ganti link URL di "src" dengan link gambar unit asli C.R.T. -->
+                <img 
+                    src="https://images.unsplash.com/photo-1587556930799-8dca6a5f3607?auto=format&fit=crop&q=80&w=800&h=600" 
+                    alt="Armada Ambulance C.R.T Siaga" 
+                    class="rounded-3xl shadow-2xl relative z-10 w-full object-cover aspect-[4/3] ring-1 ring-slate-900/5"
+                >
+                <!-- BATAS FOTO UNIT AMBULANCE -->
+
+                <!-- Floating Info Badge -->
+                <div class="absolute -bottom-6 sm:-bottom-8 left-4 sm:-left-8 bg-white p-4 sm:p-5 rounded-2xl shadow-xl z-20 flex items-center gap-4 border border-slate-50 animate-[bounce_3s_infinite]">
+                    <div class="bg-green-100 p-3 rounded-full text-green-600">
+                        <i data-lucide="timer" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-bold uppercase tracking-wider">Waktu Respon</p>
+                        <p class="text-xl font-extrabold text-slate-900">10-15 Menit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="layanan" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h3 class="text-3xl font-extrabold text-slate-900 mb-4">Pilihan Layanan Kami</h3>
+                <p class="text-slate-600 text-lg">Sesuaikan dengan kebutuhan evakuasi medis Anda. Kami memberikan harga transparan dan pelayanan optimal.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                <!-- Card Dalam Kota -->
+                <div class="bg-white rounded-[2rem] p-8 sm:p-10 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-red-50 rounded-bl-full -z-0 group-hover:scale-110 transition-transform duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center text-red-600 mb-8 shadow-sm">
+                            <i data-lucide="map-pin" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-slate-900 mb-4">Ambulance Dalam Kota</h4>
+                        <p class="text-slate-600 mb-8 leading-relaxed">
+                            Layanan evakuasi medis, kontrol rumah sakit, dan penjemputan pasien untuk wilayah seputar ibukota. Pengemudi hafal jalan alternatif untuk menembus kemacetan.
+                        </p>
+                        <ul class="space-y-4 mb-10">
+                            <li class="flex items-start gap-3 text-slate-700 font-medium">
+                                <i data-lucide="check-circle-2" class="w-6 h-6 text-green-500 shrink-0"></i> 
+                                <span>Waktu tiba di lokasi sangat cepat</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-700 font-medium">
+                                <i data-lucide="check-circle-2" class="w-6 h-6 text-green-500 shrink-0"></i> 
+                                <span>Tarif flat dan transparan dalam zona</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-700 font-medium">
+                                <i data-lucide="check-circle-2" class="w-6 h-6 text-green-500 shrink-0"></i> 
+                                <span>Pendampingan paramedis dasar</span>
+                            </li>
+                        </ul>
+                        <button onclick="document.getElementById('pemesanan').scrollIntoView(); setServiceType('dalam-kota');" class="inline-flex items-center text-red-600 font-bold hover:gap-3 gap-2 transition-all">
+                            Pesan Layanan Ini <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card Luar Kota -->
+                <div class="bg-white rounded-[2rem] p-8 sm:p-10 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-blue-50 rounded-bl-full -z-0 group-hover:scale-110 transition-transform duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 mb-8 shadow-sm">
+                            <i data-lucide="navigation" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-slate-900 mb-4">Ambulance Luar Kota</h4>
+                        <p class="text-slate-600 mb-8 leading-relaxed">
+                            Layanan rujukan antar RS, kepulangan pasien, hingga ambulance jenazah rute luar kota/provinsi. Armada dirancang khusus untuk kenyamanan jarak jauh.
+                        </p>
+                        <ul class="space-y-4 mb-10">
+                            <li class="flex items-start gap-3 text-slate-700 font-medium">
+                                <i data-lucide="check-circle-2" class="w-6 h-6 text-blue-500 shrink-0"></i> 
+                                <span>Fasilitas setara ICU / VIP dalam kabin</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-700 font-medium">
+                                <i data-lucide="check-circle-2" class="w-6 h-6 text-blue-500 shrink-0"></i> 
+                                <span>Dokter pendamping khusus (Opsional)</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-700 font-medium">
+                                <i data-lucide="check-circle-2" class="w-6 h-6 text-blue-500 shrink-0"></i> 
+                                <span>Driver tersertifikasi jarak jauh</span>
+                            </li>
+                        </ul>
+                        <button onclick="document.getElementById('pemesanan').scrollIntoView(); setServiceType('luar-kota');" class="inline-flex items-center text-blue-600 font-bold hover:gap-3 gap-2 transition-all">
+                            Pesan Layanan Ini <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pemesanan" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-900/20 flex flex-col lg:flex-row border border-slate-800">
+                
+                <!-- Form Area -->
+                <div class="lg:w-5/12 p-8 md:p-12 text-white flex flex-col justify-center">
+                    <div class="mb-10">
+                        <h3 class="text-3xl font-bold mb-3 text-white">Kirim Titik Lokasi</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Isi form ini. Sistem akan merangkum lokasi Anda dan membuka WhatsApp Admin agar kami bisa langsung mengirim armada ke titik Anda.</p>
+                    </div>
+
+                    <form id="booking-form" class="space-y-6">
+                        <!-- Pilihan Layanan (JS Controlled) -->
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-300 mb-3">Pilih Jenis Layanan</label>
+                            <div class="grid grid-cols-2 gap-4">
+                                <button type="button" id="btn-dalam-kota" class="py-3.5 rounded-xl font-bold border transition-all bg-red-600 border-red-600 text-white shadow-lg shadow-red-900/20">
+                                    Dalam Kota
+                                </button>
+                                <button type="button" id="btn-luar-kota" class="py-3.5 rounded-xl font-bold border transition-all border-slate-700 text-slate-400 hover:bg-slate-800 hover:text-white">
+                                    Luar Kota
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Input Alamat -->
+                        <div>
+                            <label for="pickup" class="block text-sm font-semibold text-slate-300 mb-2">Titik Penjemputan</label>
+                            <div class="relative">
+                                <i data-lucide="map-pin" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500 w-5 h-5"></i>
+                                <input 
+                                    type="text" 
+                                    id="pickup"
+                                    required
+                                    placeholder="Contoh: RS Medika, Jl. Sudirman..." 
+                                    class="w-full bg-slate-900/50 border border-slate-700 rounded-xl py-4 pl-12 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 placeholder-slate-600 transition-shadow"
+                                >
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="destination" class="block text-sm font-semibold text-slate-300 mb-2">Titik Tujuan (RS / Rumah)</label>
+                            <div class="relative">
+                                <i data-lucide="flag" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500 w-5 h-5"></i>
+                                <input 
+                                    type="text" 
+                                    id="destination"
+                                    required
+                                    placeholder="Contoh: Rumah Bapak Budi, Depok..." 
+                                    class="w-full bg-slate-900/50 border border-slate-700 rounded-xl py-4 pl-12 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 placeholder-slate-600 transition-shadow"
+                                >
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 active:bg-red-800 text-white py-4.5 px-4 h-14 rounded-xl font-bold text-lg transition-colors flex justify-center items-center gap-2 shadow-lg shadow-red-900/30">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                            Kirim via WhatsApp
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Google Maps Area -->
+                <div class="lg:w-7/12 relative min-h-[400px] lg:min-h-full bg-slate-800">
+                    <!-- Overlay Info -->
+                    <div class="absolute top-6 left-6 z-10 bg-white/95 backdrop-blur px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 border border-slate-100">
+                        <span class="relative flex h-3 w-3">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                        </span>
+                        <span class="text-sm font-bold text-slate-900">Area Layanan Tercover</span>
+                    </div>
+                    
+                    <!-- Embed Google Maps -->
+                    <!-- Lokasi Pangkalan Ambulance C.R.T Cinangka -->
+                    <iframe 
+                        src="https://maps.google.com/maps?q=Jl.%20Smpm%2029,%20Cinangka,%20Kec.%20Sawangan,%20Kota%20Depok,%20Jawa%20Barat%2016516&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                        class="absolute inset-0 w-full h-full border-0 grayscale-[20%] opacity-90 hover:opacity-100 hover:grayscale-0 transition-all duration-700"
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Peta Area Layanan Ambulance">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tentang" class="py-24 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h3 class="text-3xl font-extrabold text-slate-900 mb-4">Mengapa Memilih Kami?</h3>
+                <p class="text-slate-600">Standar operasional tinggi demi keselamatan dan kenyamanan pasien.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="text-center flex flex-col items-center">
+                    <div class="w-20 h-20 bg-white shadow-sm border border-slate-100 rounded-2xl flex items-center justify-center text-red-600 mb-6 transform hover:-translate-y-2 transition-transform">
+                        <i data-lucide="clock" class="w-10 h-10"></i>
+                    </div>
+                    <h5 class="text-xl font-bold text-slate-900 mb-3">Siaga 24/7</h5>
+                    <p class="text-slate-600 leading-relaxed text-sm">Tim dispatcher dan pengemudi kami selalu siaga kapanpun Anda membutuhkan, bahkan di hari libur.</p>
+                </div>
+                
+                <div class="text-center flex flex-col items-center">
+                    <div class="w-20 h-20 bg-white shadow-sm border border-slate-100 rounded-2xl flex items-center justify-center text-blue-600 mb-6 transform hover:-translate-y-2 transition-transform">
+                        <i data-lucide="shield-plus" class="w-10 h-10"></i>
+                    </div>
+                    <h5 class="text-xl font-bold text-slate-900 mb-3">Peralatan Standar ICU</h5>
+                    <p class="text-slate-600 leading-relaxed text-sm">Armada dilengkapi tabung oksigen, stretcher modern, monitor pasien, hingga perlengkapan medis gawat darurat.</p>
+                </div>
+                
+                <div class="text-center flex flex-col items-center">
+                    <div class="w-20 h-20 bg-white shadow-sm border border-slate-100 rounded-2xl flex items-center justify-center text-green-600 mb-6 transform hover:-translate-y-2 transition-transform">
+                        <i data-lucide="stethoscope" class="w-10 h-10"></i>
+                    </div>
+                    <h5 class="text-xl font-bold text-slate-900 mb-3">Tenaga Medis Ahli</h5>
+                    <p class="text-slate-600 leading-relaxed text-sm">Kami menyediakan layanan pendampingan oleh perawat (BTCLS) maupun dokter untuk evakuasi berisiko tinggi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-slate-300 py-16 border-t-4 border-red-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-12 gap-8 lg:gap-12 mb-12">
+                
+                <div class="md:col-span-5">
+                    <a href="#" class="flex items-center gap-2 mb-6">
+                        <i data-lucide="heart-pulse" class="w-8 h-8 text-red-500"></i>
+                        <h1 class="font-extrabold text-2xl text-white tracking-tight">Ambulance<span class="text-red-500">C.R.T</span></h1>
+                    </a>
+                    <p class="mb-6 leading-relaxed text-slate-400 text-sm max-w-sm">
+                        Cinangka Respon Team - Layanan transportasi dan evakuasi medis darurat terpadu. Berdedikasi untuk memberikan pertolongan pertama dengan cepat, aman, dan memprioritaskan keselamatan pasien.
+                    </p>
+                    <!-- Social Media Links (Dummy) -->
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors" aria-label="Instagram">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors" aria-label="Facebook">
+                            <i data-lucide="facebook" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="md:col-span-3">
+                    <h4 class="text-white font-bold mb-6 text-lg">Menu Cepat</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#layanan" class="hover:text-red-400 transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i> Dalam Kota</a></li>
+                        <li><a href="#layanan" class="hover:text-red-400 transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i> Luar Kota</a></li>
+                        <li><a href="#tentang" class="hover:text-red-400 transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i> Profil Kami</a></li>
+                        <li><a href="#pemesanan" class="hover:text-red-400 transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i> Cek Peta Layanan</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-4">
+                    <h4 class="text-white font-bold mb-6 text-lg">Pusat Bantuan Darurat</h4>
+                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                        <ul class="space-y-4 text-sm">
+                            <li class="flex items-center gap-4">
+                                <div class="bg-red-500/20 p-2 rounded-lg">
+                                    <i data-lucide="phone" class="w-5 h-5 text-red-500"></i>
+                                </div>
+                                <div>
+                                    <p class="text-slate-400 text-xs font-semibold uppercase mb-0.5">Telepon / WhatsApp</p>
+                                    <a href="tel:+628993788154" class="font-bold text-white text-base hover:text-red-400 transition">0899-3788-154</a>
+                                    <p class="text-slate-500 text-xs mt-0.5">a.n Yusuf Agung (Pengurus Utama)</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <div class="bg-slate-700 p-2 rounded-lg mt-1">
+                                    <i data-lucide="map-pin" class="w-5 h-5 text-slate-300"></i>
+                                </div>
+                                <div>
+                                    <p class="text-slate-400 text-xs font-semibold uppercase mb-0.5">Basecamp Operasional</p>
+                                    <p class="text-slate-300">Jl. Smpm 29, Cinangka,<br>Kec. Sawangan, Kota Depok,<br>Jawa Barat 16516</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-slate-800 text-center flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+                <p>&copy; 2026 Ambulance C.R.T (Cinangka Respon Team). Hak Cipta Dilindungi.</p>
+                <p>Dibuat untuk pelayanan masyarakat.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Inisialisasi Icon Lucide
+        lucide.createIcons();
+
+        // 2. Logika Mobile Menu Toggle
+        const btnMenu = document.getElementById('btn-mobile-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconMenu = document.getElementById('icon-menu');
+        const iconClose = document.getElementById('icon-close');
+        
+        btnMenu.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            iconMenu.classList.toggle('hidden');
+            iconClose.classList.toggle('hidden');
+        });
+
+        // Tutup menu saat klik link di mobile
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                iconMenu.classList.remove('hidden');
+                iconClose.classList.add('hidden');
+            });
+        });
+
+        // 3. Logika Pemilihan Layanan (Form & UI update)
+        let activeService = 'dalam-kota';
+        const btnDalamKota = document.getElementById('btn-dalam-kota');
+        const btnLuarKota = document.getElementById('btn-luar-kota');
+
+        // Fungsi yang bisa dipanggil dari HTML (onclick) atau JS
+        window.setServiceType = function(type) {
+            activeService = type;
+            if(type === 'dalam-kota') {
+                // Style Active untuk Dalam Kota
+                btnDalamKota.className = "py-3.5 rounded-xl font-bold border transition-all bg-red-600 border-red-600 text-white shadow-lg shadow-red-900/20";
+                // Style Inactive untuk Luar Kota
+                btnLuarKota.className = "py-3.5 rounded-xl font-bold border transition-all border-slate-700 text-slate-400 hover:bg-slate-800 hover:text-white";
+            } else {
+                // Style Active untuk Luar Kota
+                btnLuarKota.className = "py-3.5 rounded-xl font-bold border transition-all bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-900/20";
+                // Style Inactive untuk Dalam Kota
+                btnDalamKota.className = "py-3.5 rounded-xl font-bold border transition-all border-slate-700 text-slate-400 hover:bg-slate-800 hover:text-white";
+            }
+        };
+
+        // Pasang event listener untuk tombol form
+        btnDalamKota.addEventListener('click', () => setServiceType('dalam-kota'));
+        btnLuarKota.addEventListener('click', () => setServiceType('luar-kota'));
+
+        // 4. Logika Pengiriman Form ke WhatsApp
+        const form = document.getElementById('booking-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault(); // Mencegah reload halaman
+            
+            // Ambil data dari input
+            const pickupValue = document.getElementById('pickup').value;
+            const destValue = document.getElementById('destination').value;
+            
+            // Nomor WhatsApp tujuan 
+            const waNumber = "628993788154"; 
+            
+            // Format Pesan
+            const serviceName = activeService === 'dalam-kota' ? 'Dalam Kota' : 'Luar Kota';
+            const message = `🚨 *PANGGILAN DARURAT AMBULANCE C.R.T!* 🚨%0A%0A*Jenis Layanan:* ${serviceName}%0A*Titik Jemput:* ${pickupValue}%0A*Titik Tujuan:* ${destValue}%0A%0AMohon admin/dispatcher (Bp. Yusuf Agung) segera merespon pesan ini.`;
+            
+            // Buka tab WhatsApp
+            window.open(`https://wa.me/${waNumber}?text=${message}`, '_blank');
+            
+            // Reset input form setelah dikirim (opsional)
+            // form.reset(); 
+        });
+    </script>
+</body>
+</html>
