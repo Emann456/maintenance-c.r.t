@@ -148,7 +148,7 @@
                 <!-- FOTO UNIT AMBULANCE SEMENTARA -->
                 <!-- Nanti ganti link URL di "src" dengan link gambar unit asli C.R.T. -->
                 <img 
-                    src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmhVUndeGgzy70uqc_wbv7BcV33gi9WScWbocvTKQqP0DNSEtPnBnAw-5qgjBs69iIeZZ_JHGbfPwJ74RJoVuhrn9EwhkF_OA67zlcfi6uqIamV11Jt6licmQIXPuwkO3i13ilbeUNwqafT=w408-h612-k-no/photo-1587556930799-8dca6a5f3607?auto=format&fit=crop&q=80&w=800&h=600" 
+                    src="ambulance-zml.PNG" 
                     alt="Armada Ambulance C.R.T Siaga" 
                     class="rounded-3xl shadow-2xl relative z-10 w-full object-cover aspect-[4/3] ring-1 ring-slate-900/5"
                 >
@@ -221,11 +221,11 @@
                         <ul class="space-y-4 mb-10">
                             <li class="flex items-start gap-3 text-slate-700 font-medium">
                                 <i data-lucide="check-circle-2" class="w-6 h-6 text-blue-500 shrink-0"></i> 
-                                <span>Fasilitas Kabin Terbaik</span>
+                                <span>Mengutamakan Pelayanan Terbaik</span>
                             </li>
                             <li class="flex items-start gap-3 text-slate-700 font-medium">
                                 <i data-lucide="check-circle-2" class="w-6 h-6 text-blue-500 shrink-0"></i> 
-                                <span>Perawat pendamping (opsional)</span>
+                                <span>Perawat pendamping dasar(Opsional)</span>
                             </li>
                             <li class="flex items-start gap-3 text-slate-700 font-medium">
                                 <i data-lucide="check-circle-2" class="w-6 h-6 text-blue-500 shrink-0"></i> 
@@ -289,9 +289,47 @@
                                     type="text" 
                                     id="destination"
                                     required
-                                    placeholder="Contoh: Rumah Bapak Budi, Depok..." 
+                                    placeholder="Contoh: Rumah..., Depok..." 
                                     class="w-full bg-slate-900/50 border border-slate-700 rounded-xl py-4 pl-12 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 placeholder-slate-600 transition-shadow"
                                 >
+                            </div>
+                        </div>
+
+                        <!-- Input Diagnosis & Kebutuhan Medis Pasien -->
+                        <div class="space-y-3">
+                            <div>
+                                <label for="condition-type" class="block text-sm font-semibold text-slate-300 mb-2">Kondisi Pasien & Kebutuhan Alat</label>
+                                <div class="relative">
+                                    <i data-lucide="stethoscope" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500 w-5 h-5"></i>
+                                    <select 
+                                        id="condition-type"
+                                        required
+                                        class="w-full bg-slate-900/50 border border-slate-700 rounded-xl py-4 pl-12 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm transition-shadow appearance-none cursor-pointer"
+                                    >
+                                        <option value="Butuh Tabung Oksigen (Sesak Napas)" class="bg-slate-800 text-white">Butuh Tabung Oksigen (Sesak Napas)</option>
+                                        <option value="Tirah Baring (Wajib Brankar/Stretcher)" class="bg-slate-800 text-white">Tirah Baring (Wajib Brankar/Stretcher)</option>
+                                        <option value="Trauma / Patah Tulang / Cedera" class="bg-slate-800 text-white">Trauma / Patah Tulang / Cedera</option>
+                                        <option value="Pasien Kritis / Rujukan ICU" class="bg-slate-800 text-white">Pasien Kritis / Rujukan ICU</option>
+                                        <option value="Pasien Stabil / Kontrol RS Rutin" class="bg-slate-800 text-white">Pasien Stabil / Kontrol RS Rutin</option>
+                                        <option value="Layanan Mobil Jenazah" class="bg-slate-800 text-white">Layanan Mobil Jenazah</option>
+                                        <option value="Kondisi Khusus Lainnya" class="bg-slate-800 text-white">Kondisi Khusus Lainnya</option>
+                                    </select>
+                                    <i data-lucide="chevron-down" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4 pointer-events-none"></i>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="diagnosis" class="block text-xs font-medium text-slate-400 mb-1.5">Diagnosis / Keluhan Tambahan Pasien</label>
+                                <textarea 
+                                    id="diagnosis"
+                                    rows="2"
+                                    placeholder="Contoh: Pasien stroke lemas, saturasi oksigen rendah, butuh oksigen 3 lpm..."
+                                    class="w-full bg-slate-900/50 border border-slate-700 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 placeholder-slate-600 transition-shadow resize-none"
+                                ></textarea>
+                                <p class="text-[11px] text-slate-400 mt-1 flex items-center gap-1.5">
+                                    <i data-lucide="info" class="w-3.5 h-3.5 text-red-400 shrink-0"></i>
+                                    Penting agar dispatcher & tim medis mempersiapkan alat sebelum unit berangkat.
+                                </p>
                             </div>
                         </div>
 
@@ -356,19 +394,17 @@
                     <div class="w-20 h-20 bg-white shadow-sm border border-slate-100 rounded-2xl flex items-center justify-center text-green-600 mb-6 transform hover:-translate-y-2 transition-transform">
                         <i data-lucide="stethoscope" class="w-10 h-10"></i>
                     </div>
-                    <h5 class="text-xl font-bold text-slate-900 mb-3">Pendamping Medis</h5>
-                    <p class="text-slate-600 leading-relaxed text-sm">Kami menyediakan layanan pendampingan Medis.</p>
+                    <h5 class="text-xl font-bold text-slate-900 mb-3">Tenaga Medis Ahli</h5>
+                    <p class="text-slate-600 leading-relaxed text-sm">Kami menyediakan layanan pendampingan evakuasi.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer Rapi (Tanpa Sosial Media) -->
     <footer class="bg-slate-900 text-slate-300 py-16 border-t-4 border-red-600">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-12 gap-8 lg:gap-12 mb-12">
                 
-                <!-- Kolom 1: Profil / Deskripsi Singkat (5 Kolom) -->
                 <div class="md:col-span-5">
                     <a href="#" class="flex items-center gap-2 mb-6">
                         <i data-lucide="heart-pulse" class="w-8 h-8 text-red-500"></i>
@@ -379,7 +415,6 @@
                     </p>
                 </div>
                 
-                <!-- Kolom 2: Menu Cepat (3 Kolom) -->
                 <div class="md:col-span-3">
                     <h4 class="text-white font-bold mb-6 text-lg">Menu Cepat</h4>
                     <ul class="space-y-3 text-sm">
@@ -390,13 +425,12 @@
                     </ul>
                 </div>
 
-                <!-- Kolom 3: Kontak Darurat (4 Kolom) -->
                 <div class="md:col-span-4">
                     <h4 class="text-white font-bold mb-6 text-lg">Pusat Bantuan Darurat</h4>
-                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-sm">
+                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
                         <ul class="space-y-4 text-sm">
                             <li class="flex items-center gap-4">
-                                <div class="bg-red-500/20 p-2.5 rounded-lg shrink-0">
+                                <div class="bg-red-500/20 p-2 rounded-lg">
                                     <i data-lucide="phone" class="w-5 h-5 text-red-500"></i>
                                 </div>
                                 <div>
@@ -406,21 +440,19 @@
                                 </div>
                             </li>
                             <li class="flex items-start gap-4">
-                                <div class="bg-slate-700 p-2.5 rounded-lg shrink-0 mt-1">
+                                <div class="bg-slate-700 p-2 rounded-lg mt-1">
                                     <i data-lucide="map-pin" class="w-5 h-5 text-slate-300"></i>
                                 </div>
                                 <div>
                                     <p class="text-slate-400 text-xs font-semibold uppercase mb-0.5">Basecamp Operasional</p>
-                                    <p class="text-slate-300 leading-relaxed">Jl. Smpm 29, Cinangka,<br>Kec. Sawangan, Kota Depok,<br>Jawa Barat 16516</p>
+                                    <p class="text-slate-300">Jl. Smpm 29, Cinangka,<br>Kec. Sawangan, Kota Depok,<br>Jawa Barat 16516</p>
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </div>
-
             </div>
             
-            <!-- Garis Pemisah & Hak Cipta Bawah -->
             <div class="pt-8 border-t border-slate-800 text-center flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
                 <p>&copy; 2026 Ambulance C.R.T (Cinangka Respon Team). Hak Cipta Dilindungi.</p>
                 <p>Dibuat untuk pelayanan masyarakat.</p>
@@ -487,13 +519,18 @@
             // Ambil data dari input
             const pickupValue = document.getElementById('pickup').value;
             const destValue = document.getElementById('destination').value;
+            const conditionValue = document.getElementById('condition-type').value;
+            const diagnosisNotes = document.getElementById('diagnosis').value.trim();
+
+            // Susun ringkasan kondisi medis
+            const finalDiagnosis = diagnosisNotes ? `${conditionValue} (Catatan: ${diagnosisNotes})` : conditionValue;
             
             // Nomor WhatsApp tujuan 
             const waNumber = "628993788154"; 
             
             // Format Pesan
             const serviceName = activeService === 'dalam-kota' ? 'Dalam Kota' : 'Luar Kota';
-            const message = `🚨 *PANGGILAN DARURAT AMBULANCE C.R.T!* 🚨%0A%0A*Jenis Layanan:* ${serviceName}%0A*Titik Jemput:* ${pickupValue}%0A*Titik Tujuan:* ${destValue}%0A%0AMohon admin/dispatcher (Bp. Yusuf Agung) segera merespon pesan ini.`;
+            const message = `🚨 *PANGGILAN DARURAT AMBULANCE C.R.T!* 🚨%0A%0A*Jenis Layanan:* ${serviceName}%0A*Titik Jemput:* ${encodeURIComponent(pickupValue)}%0A*Titik Tujuan:* ${encodeURIComponent(destValue)}%0A*Kondisi / Diagnosis Pasien:* ${encodeURIComponent(finalDiagnosis)}%0A%0AMohon admin/dispatcher (Bp. Yusuf Agung) segera merespon & mempersiapkan unit serta peralatan yang sesuai.`;
             
             // Buka tab WhatsApp
             window.open(`https://wa.me/${waNumber}?text=${message}`, '_blank');
