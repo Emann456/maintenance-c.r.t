@@ -530,7 +530,7 @@
             
             // Format Pesan
             const serviceName = activeService === 'dalam-kota' ? 'Dalam Kota' : 'Luar Kota';
-            const message = `🚨 *PANGGILAN DARURAT AMBULANCE C.R.T!* 🚨%0A%0A*Jenis Layanan:* ${serviceName}%0A*Titik Jemput:* ${encodeURIComponent(pickupValue)}%0A*Titik Tujuan:* ${encodeURIComponent(destValue)}%0A*Kondisi / Diagnosis Pasien:* ${encodeURIComponent(finalDiagnosis)}%0A%0AMohon admin/dispatcher (Bp. Yusuf Agung) segera merespon & mempersiapkan unit serta peralatan yang sesuai.`;
+            const message = `🚨 *PANGGILAN DARURAT AMBULANCE C.R.T!* 🚨%0A%0A*Jenis Layanan:* ${serviceName}%0A*Titik Jemput:* ${encodeURIComponent(pickupValue)}%0A*Titik Tujuan:* ${encodeURIComponent(destValue)}%0A*Kondisi / Diagnosis Pasien:* ${encodeURIComponent(finalDiagnosis)}%0A%0AMohon admin segera merespon & mempersiapkan unit serta peralatan yang sesuai.`;
             
             // Buka tab WhatsApp
             window.open(`https://wa.me/${waNumber}?text=${message}`, '_blank');
