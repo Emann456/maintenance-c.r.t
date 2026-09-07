@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ambulance C.R.T - Cinangka Respon Team</title>
-    <meta name="description" content="Layanan transportasi medis, sewa ambulance darurat 24 jam dalam kota dan antar kota oleh Ambulance C.R.T (Cinangka Respon Team).">
+    
+    <!-- 1. PERLUASAN KEYWORD (CINANGKA, SAWANGAN, DEPOK) -->
+    <title>Ambulance Cinangka, Sawangan & Depok 24 Jam - C.R.T</title>
+    <meta name="description" content="Layanan Ambulance 24 jam oleh C.R.T (Cinangka Respon Team). Melayani evakuasi medis darurat dalam dan luar kota area Cinangka, Sawangan, Depok dan sekitarnya.">
     <meta name="keywords" content="ambulance cinangka, ambulance sawangan, ambulance depok, sewa ambulance luar kota, sewa ambulance dalam kota, ambulance terdekat, sewa ambulance cinangka">
     <meta name="robots" content="index, follow">
     <meta name="google-site-verification" content="google-site-verification: google373055e6d9415e53.html" />
@@ -16,9 +18,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Ambulance CRT">
     
-    <!-- Icon Aplikasi (Menggunakan SVG Emoji Ambulance agar otomatis muncul tanpa file gambar tambahan) -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚑</text></svg>">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚑</text></svg>">
+    <!-- 2. GANTI LOGO VERCEL DI GOOGLE PENCARIAN -->
+    <!-- Syarat: Anda harus mengupload file bernama 'logo-crt.png' ke GitHub sejajar dengan index.html -->
+    <link rel="icon" type="image/png" href="logo-crt.png">
+    <link rel="apple-touch-icon" href="logo-crt.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,30 +58,38 @@
         }
     </style>
 
+    <!-- 3. SCHEMA MARKUP UNTUK MEMUNCULKAN BINTANG RATING DI GOOGLE -->
     <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "EmergencyService",
-  "name": "Ambulance C.R.T Cinangka Respon Team",
-  "alternateName": "Ambulance Cinangka",
-  "url": "https://ambulance-crt.vercel.app/",
-  "telephone": "+628993788154",
-  "priceRange": "Free / Donasi",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Jl. Smpm 29",
-    "addressLocality": "Cinangka, Kec. Sawangan",
-    "addressRegion": "Kota Depok, Jawa Barat",
-    "postalCode": "16516",
-    "addressCountry": "ID"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": -6.3760625,
-    "longitude": 106.7558638
-  }
-}
-</script>
+    {
+      "@context": "https://schema.org",
+      "@type": "EmergencyService",
+      "name": "Ambulance C.R.T Cinangka Respon Team",
+      "alternateName": "Ambulance Sawangan Depok",
+      "url": "https://ambulance-crt.vercel.app/",
+      "logo": "https://ambulance-crt.vercel.app/logo-crt.png",
+      "image": "https://ambulance-crt.vercel.app/ambulance-zml.png",
+      "telephone": "+628993788154",
+      "priceRange": "Tersedia",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Jl. Smpm 29",
+        "addressLocality": "Cinangka, Kec. Sawangan",
+        "addressRegion": "Kota Depok, Jawa Barat",
+        "postalCode": "16516",
+        "addressCountry": "ID"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -6.3760625,
+        "longitude": 106.7558638
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "11"
+      }
+    }
+    </script>
     
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-red-200 selection:text-red-900">
@@ -156,7 +167,7 @@
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500">Aman & Terpercaya</span>
                 </h2>
                 <p class="text-lg text-slate-600 max-w-xl leading-relaxed">
-                    Kami siap melayani transportasi medis darurat dan non-darurat Dalam Kota maupun Luar Kota. Didukung fasilitas standar medis dan perawat pendamping medis.
+                    Kami siap melayani transportasi medis darurat dan non-darurat Dalam Kota maupun Luar Kota. Didukung fasilitas standar medis dan perawat pendamping medis standar.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 pt-2">
                     <a href="#pemesanan" class="bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-xl font-bold text-center transition-all shadow-lg hover:shadow-xl hover:-translate-y-1">
@@ -249,7 +260,7 @@
                         <ul class="space-y-4 mb-10">
                             <li class="flex items-start gap-3 text-slate-700 font-medium">
                                 <i data-lucide="check-circle-2" class="w-6 h-6 text-blue-500 shrink-0"></i> 
-                                <span>Mengutamakan Pelayanan Terbaik</span>
+                                <span>Mengutamakan pelayanan terbaik</span>
                             </li>
                             <li class="flex items-start gap-3 text-slate-700 font-medium">
                                 <i data-lucide="check-circle-2" class="w-6 h-6 text-blue-500 shrink-0"></i> 
@@ -317,7 +328,7 @@
                                     type="text" 
                                     id="destination"
                                     required
-                                    placeholder="Contoh: Rumah..., Depok..." 
+                                    placeholder="Contoh: RS/Rumah.., Depok..." 
                                     class="w-full bg-slate-900/50 border border-slate-700 rounded-xl py-4 pl-12 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 placeholder-slate-600 transition-shadow"
                                 >
                             </div>
@@ -380,14 +391,14 @@
                     </div>
                     
                     <!-- Embed Google Maps -->
-                    <!-- Embed Google Maps Titik Resmi C.R.T -->
+                    <!-- Lokasi Pangkalan Ambulance C.R.T Cinangka -->
                     <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.1389114441745!2d106.7558638!3d-6.376062500000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ef6537a7f461%3A0xae4b8bd9950cf347!2sAmbulance%20C.R.T%20Cinangka%20Respon%20Team!5e0!3m2!1sid!2sid!4v1788662286791!5m2!1sid!2sid" 
                         class="absolute inset-0 w-full h-full border-0 grayscale-[20%] opacity-90 hover:opacity-100 hover:grayscale-0 transition-all duration-700"
                         allowfullscreen="" 
                         loading="lazy" 
                         referrerpolicy="no-referrer-when-downgrade"
-                        title="Lokasi Resmi Ambulance C.R.T Cinangka Respon Team">
+                        title="Basecamp C.R.T">
                     </iframe>
                 </div>
             </div>
@@ -414,7 +425,7 @@
                     <div class="w-20 h-20 bg-white shadow-sm border border-slate-100 rounded-2xl flex items-center justify-center text-blue-600 mb-6 transform hover:-translate-y-2 transition-transform">
                         <i data-lucide="shield-plus" class="w-10 h-10"></i>
                     </div>
-                    <h5 class="text-xl font-bold text-slate-900 mb-3">Peralatan Standar Medis</h5>
+                    <h5 class="text-xl font-bold text-slate-900 mb-3">Peralatan Standar ICU</h5>
                     <p class="text-slate-600 leading-relaxed text-sm">Armada dilengkapi tabung oksigen hingga perlengkapan medis gawat darurat.</p>
                 </div>
                 
@@ -423,7 +434,7 @@
                         <i data-lucide="stethoscope" class="w-10 h-10"></i>
                     </div>
                     <h5 class="text-xl font-bold text-slate-900 mb-3">Tenaga Medis Ahli</h5>
-                    <p class="text-slate-600 leading-relaxed text-sm">Kami menyediakan layanan pendampingan evakuasi.</p>
+                    <p class="text-slate-600 leading-relaxed text-sm">Kami menyediakan layanan pendampingan oleh perawat medis dasar untuk evakuasi.</p>
                 </div>
             </div>
         </div>
